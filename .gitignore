@@ -167,3 +167,7 @@ cython_debug/
 
 deal_tracker.zip
 .deal_tracker.zip
+
+
+#DB
+db.sqlite3

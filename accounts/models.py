@@ -24,7 +24,7 @@ class User(AbstractUser,PermissionsMixin):
     profile_image=models.ImageField(blank=False,null=True)
     is_superuser=models.BooleanField(default=False)
     email=models.EmailField(blank=False,null=False,unique=True)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD='email'
     REQUIRED_FIELDS=['first_name','last_name','username']
