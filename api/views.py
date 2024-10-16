@@ -10,4 +10,4 @@ class CreateLostItem(APIView):
 
 
     def post(self,request):
-        
+        pass
