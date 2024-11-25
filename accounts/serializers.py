@@ -19,10 +19,7 @@ class LoginSerializer(serializers.Serializer):
         if(not is_active):
             user.is_active=True
             user.save()
-        user=authenticate(username=attrs['email'],password=attrs['password'])
-        if(not is_active):
-            user.is_active=False
-            user.save()        
+        user=authenticate(username=attrs['email'],password=attrs['password'])       
         if(user):
             
             attrs.setdefault('access_token','NOT_ACTIVATED')
@@ -49,18 +46,22 @@ class SignupSerializer(serializers.Serializer):
     confirm_password=serializers.CharField()
     first_name=serializers.CharField()
     last_name=serializers.CharField()
-
+    phone_number = serializers.CharField()
 
     def validate(self, attrs):
         super().validate(attrs)
 
         if(not attrs['confirm_password']==attrs['password']):
             raise serializers.ValidationError('Passwords do not match')
+        
+        if(len(str(attrs['phone_number']))!=12):
+            raise serializers.ValidationError("Phone number is not valid")
 
         del attrs['confirm_password']
         try:
             user=User.objects.create_user(**attrs)
         except IntegrityError as e:
+            print(e.__cause__)
             error_message='Somthing went wrong'
 
             if(str(e.__cause__)=='UNIQUE constraint failed: accounts_user.email'):
@@ -68,6 +69,10 @@ class SignupSerializer(serializers.Serializer):
 
             if(str(e.__cause__)=='UNIQUE constraint failed: accounts_user.username'):
                 error_message='An account already exists with username'
+                
+            if(str(e.__cause__)=='UNIQUE constraint failed: accounts_user.phone_number'):
+                error_message='An account already exists with phone_number'
+
 
             raise serializers.ValidationError(f'{error_message}')
 

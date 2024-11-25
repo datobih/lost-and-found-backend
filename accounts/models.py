@@ -1,10 +1,14 @@
 from email.policy import default
 from django.db import models
 from django.contrib.auth.models import BaseUserManager,PermissionsMixin,AbstractUser
+from django.core.exceptions import ValidationError
 # from authentication.models import Otp
 # Create your models here.
 
-
+def validate_phone_number(value):
+    print('erv')
+    if(len(value) != 12):
+        raise ValidationError("Phone number is not valid")
 
 class UserManager(BaseUserManager):
     def create_user(self,email,password,**otherfields):
@@ -24,6 +28,7 @@ class User(AbstractUser,PermissionsMixin):
     profile_image=models.ImageField(blank=False,null=True)
     is_superuser=models.BooleanField(default=False)
     email=models.EmailField(blank=False,null=False,unique=True)
+    phone_number = models.CharField(unique= True,validators=[validate_phone_number],max_length=12)
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD='email'
@@ -33,6 +38,7 @@ class User(AbstractUser,PermissionsMixin):
     def set_otp(self,key):
         self.otp=key
         self.save()
+
 
         
 class Otp(models.Model):
