@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'lost_and_found.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
@@ -129,3 +129,17 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lost_found_db',
+        'USER':'lost_found_db_user',
+        'PASSWORD':'ndZaa0M6rFmsjxezkU3rSdPyxRkPdHQw',
+        'HOST':'dpg-ct7lh708fa8c738u7350-a.oregon-postgres.render.com',
+        'PORT':'5432'
+    }
+}
