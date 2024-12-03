@@ -25,7 +25,7 @@ class GetLostItemsView(APIView):
         items = Item.objects.filter(is_found=False)
         print(items)
         data = ItemSerializer(items,many = True).data
-        return Response({'items': data},200)
+        return Response(data,200)
     
 
 class ItemFoundView(APIView):
@@ -47,5 +47,5 @@ class GetFoundItems(APIView):
     def get(self,request):
         items = Item.objects.filter(is_found=True)
         data = ItemSerializer(items,many = True).data
-        return Response({'items': data},200)
+        return Response(data,200)
     

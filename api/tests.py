@@ -10,7 +10,8 @@ class BaseTestCase(APITestCase):
     def test_create_lost_item(self):
         url = reverse('create-lost-item')
         img = open('C:/Users/DAVID/Documents/Scanned Documents/NIN.jpg','rb')
-        data = {'name':'DCD','description':"dcvev",'image':img}
+        data = {'name':'DCD','description':"dcvev",'image':img,
+                'category':'jcdinc','location':'DCE'}
         response  = self.client.post(path = url,data=data)
         print(response.json())
         return 
