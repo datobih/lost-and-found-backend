@@ -23,7 +23,7 @@ class BaseTestCase(APITestCase):
     
     def test_found_item(self):
         url = reverse('item-found')
-        response = self.client.post(path =url,data={'id':1})
+        response = self.client.post(path =url,data={'ids':1})
         print(response.json())
         return
 

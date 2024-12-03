@@ -32,7 +32,7 @@ class User(AbstractUser,PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD='email'
-    REQUIRED_FIELDS=['first_name','last_name','username']
+    REQUIRED_FIELDS=['first_name','last_name']
     objects=UserManager()
 
     def set_otp(self,key):

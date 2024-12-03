@@ -5,12 +5,13 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import ItemSerializer,IDSerialiser
 from .models import Item
 from rest_framework.response import Response
-
+from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 
 class CreateLostItemView(APIView):
     # permission_classes = [IsAuthenticated]
     # authentication_classes = [JWTAuthentication]
+    parser_classes = [MultiPartParser, FormParser]
     def post(self,request):
         data = request.data
         serializer = ItemSerializer(data = data)

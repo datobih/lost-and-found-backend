@@ -40,7 +40,6 @@ class LoginSerializer(serializers.Serializer):
 
 
 class SignupSerializer(serializers.Serializer):
-    username=serializers.CharField()
     email=serializers.EmailField()
     password=serializers.CharField()
     confirm_password=serializers.CharField()
@@ -62,7 +61,7 @@ class SignupSerializer(serializers.Serializer):
             user=User.objects.create_user(**attrs)
         except IntegrityError as e:
             print(e.__cause__)
-            error_message='Somthing went wrong'
+            error_message=e.__cause__
 
             if(str(e.__cause__)=='UNIQUE constraint failed: accounts_user.email'):
                 error_message='An account already exists with email'
