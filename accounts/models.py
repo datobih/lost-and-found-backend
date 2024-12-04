@@ -30,6 +30,7 @@ class User(AbstractUser,PermissionsMixin):
     email=models.EmailField(blank=False,null=False,unique=True)
     phone_number = models.CharField(unique= True,validators=[validate_phone_number],max_length=12)
     is_active = models.BooleanField(default=True)
+    username = None
 
     USERNAME_FIELD='email'
     REQUIRED_FIELDS=['first_name','last_name']
