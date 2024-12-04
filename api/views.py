@@ -9,12 +9,13 @@ from rest_framework.parsers import MultiPartParser, FormParser
 # Create your views here.
 
 class CreateLostItemView(APIView):
-    # permission_classes = [IsAuthenticated]
-    # authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     parser_classes = [MultiPartParser, FormParser]
     def post(self,request):
         data = request.data
-        serializer = ItemSerializer(data = data)
+        data['posted_by'] = request.user.pk
+        serializer = ItemSerializer(data = data,context = {'request':request})
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({'message':'Created successfully'},200)

@@ -11,6 +11,7 @@ class Item(models.Model):
     #     ('Konga','Konga'),
     #     ('Jiji','Jiji')
     # ]
+    posted_by = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     image  = models.ImageField()
     is_found = models.BooleanField(default=False)

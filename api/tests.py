@@ -4,21 +4,44 @@ from django.urls import reverse
 class BaseTestCase(APITestCase):
 
     def setUp(self):
-        self.test_create_lost_item()
-    
+        self.test_create_user()
+        self.test_login()
+
+
+
+    def test_create_user(self):
+        url = reverse('signup')
+        data = {'first_name':'David','last_name':'Ayodele',
+                'password':'randomPASS123',
+                'phone_number':'+14753658632','confirm_password':'randomPASS123',
+                'email':'dicdn@gmail.com'
+                }
+        response = self.client.post(url,data=data)
+        print(response)
+
+    def test_login(self):
+        url  = reverse('login')
+        data = {'email':"dicdn@gmail.com",'password':'randomPASS123'}
+        response = self.client.post(url,data=data)
+        self.token = response.json()['access_token']
+        print(response.json())
 
     def test_create_lost_item(self):
         url = reverse('create-lost-item')
         img = open('C:/Users/DAVID/Documents/Scanned Documents/NIN.jpg','rb')
         data = {'name':'DCD','description':"dcvev",'image':img,
                 'category':'jcdinc','location':'DCE'}
-        response  = self.client.post(path = url,data=data)
+        auth_header=f'Bearer {self.token}'
+        response  = self.client.post(path = url,data=data,HTTP_AUTHORIZATION=auth_header,
+                                           )
         print(response.json())
         return 
     
     def test_get_lost_items(self):
+        auth_header=f'Bearer {self.token}'
         url = reverse('lost-items')
-        response = self.client.get(path= url)
+        response = self.client.get(path= url,HTTP_AUTHORIZATION=auth_header,
+                                           content_type='application/json')
         print(response.json())
         return
     
