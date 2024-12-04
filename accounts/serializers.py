@@ -14,7 +14,12 @@ class LoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         super().validate(attrs)
-        user=User.objects.get(email=attrs['email'])
+        user = None
+        try:
+            user=User.objects.get(email=attrs['email'])
+        except User.DoesNotExist :
+            raise serializers.ValidationError('User does not exist')
+
         is_active=user.is_active
         if(not is_active):
             user.is_active=True
