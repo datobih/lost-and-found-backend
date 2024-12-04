@@ -29,6 +29,15 @@ class GetLostItemsView(APIView):
         return Response(data,200)
     
 
+
+class GetMyAdsView(APIView):
+    def get(self,request):
+        items = Item.objects.filter(is_found=False,posted_by = request.user)
+        print(items)
+        data = ItemSerializer(items,many = True).data
+        return Response(data,200)
+
+
 class ItemFoundView(APIView):
     def post(self,request):
         data = request.data
