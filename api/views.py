@@ -31,6 +31,8 @@ class GetLostItemsView(APIView):
 
 
 class GetMyAdsView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
     def get(self,request):
         items = Item.objects.filter(is_found=False,posted_by = request.user)
         print(items)
