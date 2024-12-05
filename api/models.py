@@ -16,6 +16,6 @@ class Item(models.Model):
     image  = models.ImageField()
     is_found = models.BooleanField(default=False)
     description = models.TextField()
-    date_updated = models.DateTimeField(auto_now=True)
+    date_created = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
