@@ -2,10 +2,11 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
-from .serializers import ItemSerializer,IDSerialiser
+from .serializers import ItemSerializer,IDSerialiser,QuerySerializer
 from .models import Item
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
+from django.db.models import Q
 # Create your views here.
 
 class CreateLostItemView(APIView):
@@ -60,4 +61,15 @@ class GetFoundItems(APIView):
         items = Item.objects.filter(is_found=True)
         data = ItemSerializer(items,many = True).data
         return Response(data,200)
-    
+
+
+class SearchLostItem(APIView):
+    def post(self,request):
+        data = request.data
+        print(data)
+        serializer = QuerySerializer(data = data)
+        if(not serializer.is_valid()):
+            return Response({'message':'Wrong payload provided'})
+        items = Item.objects.filter(Q(name__icontains = data['query']) | Q(location__icontains = data['query']))
+        data = ItemSerializer(items,many = True).data
+        return Response(data=data,status = 200)

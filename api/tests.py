@@ -6,6 +6,7 @@ class BaseTestCase(APITestCase):
     def setUp(self):
         self.test_create_user()
         self.test_login()
+        self.test_create_lost_item()
 
 
 
@@ -26,6 +27,13 @@ class BaseTestCase(APITestCase):
         self.token = response.json()['access_token']
         print(response.json())
 
+    def test_search_items(self):
+        auth_header=f'Bearer {self.token}'
+        url = reverse('search-item')
+        response = self.client.post(data={'query':"DCE"},path= url,HTTP_AUTHORIZATION=auth_header,
+                                           )
+        print(response.json())
+        return        
 
     def test_get_profile(self):
         auth_header = f'Bearer {self.token}'

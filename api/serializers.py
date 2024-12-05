@@ -9,3 +9,9 @@ class ItemSerializer(serializers.ModelSerializer):
 
 class IDSerialiser(serializers.Serializer):
     id = serializers.CharField()
+
+
+
+
+class QuerySerializer(serializers.Serializer):
+    query = serializers.CharField()
