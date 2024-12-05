@@ -106,3 +106,9 @@ class ResendEmailSerializer(serializers.Serializer):
         
         attrs['user']=user
         return attrs
+    
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id','first_name','last_name','email','profile_image']

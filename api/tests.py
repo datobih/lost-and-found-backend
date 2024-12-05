@@ -26,6 +26,13 @@ class BaseTestCase(APITestCase):
         self.token = response.json()['access_token']
         print(response.json())
 
+
+    def test_get_profile(self):
+        auth_header = f'Bearer {self.token}'
+        url  = reverse('profile')
+        response = self.client.post(url,HTTP_AUTHORIZATION=auth_header)
+        print(response.json())        
+
     def test_create_lost_item(self):
         url = reverse('create-lost-item')
         img = open('C:/Users/DAVID/Documents/Scanned Documents/NIN.jpg','rb')

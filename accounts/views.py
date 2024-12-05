@@ -9,7 +9,7 @@ from .models import Otp
 from django.template import loader
 from django.core.mail import EmailMultiAlternatives,send_mail
 from django.conf import settings
-from .serializers import VerifyEmailSerializer,ResendEmailSerializer
+from .serializers import UserSerializer,VerifyEmailSerializer,ResendEmailSerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -120,3 +120,12 @@ class ResendOTPView(APIView):
         user=serializer.validated_data['user']
         # send_otp_mail(user=user)
         return Response(status=200)
+    
+
+class GetProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    def get(self,request):
+        serializer = UserSerializer(request.user)
+        data = serializer.data
+        return Response(data,status = 200)
