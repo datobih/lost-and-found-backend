@@ -24,4 +24,7 @@ class BaseTestCase(APITestCase):
         data = {'email':"dicdn@gmail.com",'password':'randomPASS123'}
         response = self.client.post(url,data=data)
         print(response.json())
+
+
+        
         

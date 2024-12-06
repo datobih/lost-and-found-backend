@@ -6,7 +6,7 @@ class BaseTestCase(APITestCase):
     def setUp(self):
         self.test_create_user()
         self.test_login()
-        self.test_create_lost_item()
+
 
 
 
@@ -26,6 +26,13 @@ class BaseTestCase(APITestCase):
         response = self.client.post(url,data=data)
         self.token = response.json()['access_token']
         print(response.json())
+
+    def test_delete_user(self):
+        auth_header=f'Bearer {self.token}'        
+        url  = reverse('delete-account')
+        response = self.client.post(url,HTTP_AUTHORIZATION=auth_header)
+        print(response)       
+        self.test_login()
 
     def test_search_items(self):
         auth_header=f'Bearer {self.token}'

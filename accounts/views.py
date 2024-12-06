@@ -129,3 +129,12 @@ class GetProfileView(APIView):
         serializer = UserSerializer(request.user)
         data = serializer.data
         return Response(data,status = 200)
+
+
+class DeleteAccountView(APIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    def post(self,request):
+        request.user.delete()
+        return Response(status=200)
